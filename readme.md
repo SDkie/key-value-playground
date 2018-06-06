@@ -47,4 +47,4 @@ For the initial release, the following tasks are expected:
 * [x] Create the table `keys` (id, key, value) with the above dictionary
 * [ ] Implement a WebSocket server to handle JSON request/responses
 * [ ] Implement automated tests to check all dictionary key/values
-* [ ] Deploy the server
+* [ ] Deploy the server (your choice)
