@@ -49,9 +49,9 @@ func TestKeyValueHandler(t *testing.T) {
 	defer s.Close()
 
 	// Convert http://127.0.0.1 to ws://127.0.0.
-	u := "ws" + strings.TrimPrefix(s.URL, "http")
+	s.URL = strings.Replace(s.URL, "http", "ws", 1)
 
-	ws, _, err := websocket.DefaultDialer.Dial(u, nil)
+	ws, _, err := websocket.DefaultDialer.Dial(s.URL, nil)
 	if err != nil {
 		t.Fatalf("%v", err)
 	}
