@@ -1,40 +1,13 @@
 package handler
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 
+	"github.com/SDkie/key-value-playground/helper"
 	"github.com/SDkie/key-value-playground/model"
 	"github.com/gorilla/websocket"
 )
-
-type Input struct {
-	Key string `json:"key"`
-}
-
-func (input *Input) ReadFromByte(msg []byte) error {
-	err := json.Unmarshal(msg, input)
-	if err != nil {
-		log.Println("Error during Unmarshal", err)
-		return err
-	}
-	return nil
-}
-
-type Output struct {
-	Value string `json:"value"`
-}
-
-func (output *Output) WriteToByte() ([]byte, error) {
-	outputMarshal, err := json.Marshal(*output)
-	if err != nil {
-		log.Println("Error during Marshal", err)
-		return outputMarshal, err
-	}
-
-	return outputMarshal, nil
-}
 
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
@@ -57,7 +30,7 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		input := Input{}
+		input := helper.Input{}
 		err = input.ReadFromByte(message)
 		if err != nil {
 			break
@@ -69,7 +42,7 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		output := Output{
+		output := helper.Output{
 			Value: value,
 		}
 
