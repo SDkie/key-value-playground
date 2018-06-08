@@ -17,7 +17,7 @@ type Database struct {
 }
 
 type Webserver struct {
-	WEBSERVER_PORT string `valid:"required"`
+	PORT string `valid:"required"`
 }
 
 type Config struct {
@@ -38,7 +38,7 @@ func Init() *Config {
 	config.Database.DB_PASSWORD = os.Getenv("DB_PASSWORD")
 
 	// Webserver
-	config.Webserver.WEBSERVER_PORT = os.Getenv("WEBSERVER_PORT")
+	config.Webserver.PORT = os.Getenv("PORT")
 
 	_, err := govalidator.ValidateStruct(config)
 	if err != nil {

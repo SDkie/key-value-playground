@@ -20,7 +20,7 @@ func main() {
 
 	http.HandleFunc("/keyvalue", handler.KeyValue)
 
-	addr := fmt.Sprintf("localhost:%s", cfg.Webserver.WEBSERVER_PORT)
+	addr := fmt.Sprintf("localhost:%s", cfg.Webserver.PORT)
 	log.Println("Starting server at -", addr)
 	log.Printf("KeyValue WebSocket running at - ws://%s/keyvalue\n", addr)
 	log.Fatal(http.ListenAndServe(addr, nil))
