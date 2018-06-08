@@ -13,8 +13,27 @@ type Input struct {
 	Key string `json:"key"`
 }
 
+func (input *Input) ReadFromByte(msg []byte) error {
+	err := json.Unmarshal(msg, input)
+	if err != nil {
+		log.Println("Error during Unmarshal", err)
+		return err
+	}
+	return nil
+}
+
 type Output struct {
-	Value string
+	Value string `json:"value"`
+}
+
+func (output *Output) WriteToByte() ([]byte, error) {
+	outputMarshal, err := json.Marshal(*output)
+	if err != nil {
+		log.Println("Error during Marshal", err)
+		return outputMarshal, err
+	}
+
+	return outputMarshal, nil
 }
 
 var upgrader = websocket.Upgrader{
@@ -39,9 +58,8 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 		}
 
 		input := Input{}
-		err = json.Unmarshal(message, &input)
+		err = input.ReadFromByte(message)
 		if err != nil {
-			log.Println("Error during Unmarshal", err)
 			break
 		}
 
@@ -51,13 +69,12 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		result := Output{
+		output := Output{
 			Value: value,
 		}
 
-		outputMarshal, err := json.Marshal(result)
+		outputMarshal, err := output.WriteToByte()
 		if err != nil {
-			log.Println("error marshal", err)
 			break
 		}
 
