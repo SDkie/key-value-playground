@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/SDkie/key-value-playground/helper"
+	"github.com/SDkie/key-value-playground/encoding"
 	"github.com/SDkie/key-value-playground/model"
 	"github.com/gorilla/websocket"
 )
@@ -30,7 +30,7 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		input := helper.Input{}
+		input := encoding.Input{}
 		err = input.ReadFromByte(message)
 		if err != nil {
 			break
@@ -42,7 +42,7 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		output := helper.Output{
+		output := encoding.Output{
 			Value: value,
 		}
 

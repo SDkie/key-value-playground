@@ -10,8 +10,8 @@ import (
 
 	"github.com/SDkie/key-value-playground/config"
 	"github.com/SDkie/key-value-playground/db"
+	"github.com/SDkie/key-value-playground/encoding"
 	"github.com/SDkie/key-value-playground/handler"
-	"github.com/SDkie/key-value-playground/helper"
 	"github.com/gorilla/websocket"
 )
 
@@ -55,8 +55,8 @@ func TestKeyValueHandler(t *testing.T) {
 	defer ws.Close()
 
 	for _, c := range cases {
-		var output helper.Output
-		input := helper.Input{Key: c.Key}
+		var output encoding.Output
+		input := encoding.Input{Key: c.Key}
 		inputMarshal, err := input.WriteToByte()
 		if err != nil {
 			t.Fatal("Error during Marshal:", err)
