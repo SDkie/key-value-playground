@@ -42,7 +42,7 @@ func TestKeyValueHandler(t *testing.T) {
 		{"6", "ছয়"},
 		{"7", "семь"},
 		{"8", "八"},
-		//		{"9", "ਨੌਂ"},
+		{"9", "ਨੌਂ"},
 	}
 
 	s := httptest.NewServer(http.HandlerFunc(handler.KeyValue))
@@ -60,6 +60,7 @@ func TestKeyValueHandler(t *testing.T) {
 	for _, c := range cases {
 		var output encoding.Output
 		input := encoding.Input{Key: c.Key}
+
 		inputMarshal, err := input.WriteToBytes()
 		if err != nil {
 			t.Fatal("Error during Marshal:", err)
@@ -80,7 +81,7 @@ func TestKeyValueHandler(t *testing.T) {
 		}
 
 		if c.Value != output.Value {
-			t.Fatalf("Not Match for Key:%s. Expected:%s Value returned:%s", c.Key, c.Value, output.Value)
+			t.Fatalf("Not Match for Key:%s Value:%s Expected:%s", c.Key, output.Value, c.Value)
 		}
 	}
 
@@ -90,5 +91,4 @@ func TestKeyValueHandler(t *testing.T) {
 		t.Fatal("Error while closing WebSocket:", err)
 		return
 	}
-
 }

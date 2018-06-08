@@ -28,17 +28,18 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 
 	for {
 		if err != nil {
+			// If last KeyValue processing has some error
+			// Then this will send that error to client
 			err = c.WriteMessage(websocket.TextMessage, []byte("ERROR:"+err.Error()))
 			if err != nil {
 				log.Println("Error while sending msg,", err)
-				continue
 			}
 		}
 
 		_, message, err = c.ReadMessage()
 		if err != nil {
 			log.Println("Error while reading msg,", err)
-			continue
+			break
 		}
 
 		input := encoding.Input{}
@@ -65,7 +66,7 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 		err = c.WriteMessage(websocket.TextMessage, outputBytes)
 		if err != nil {
 			log.Println("Error while Writing msg:", err)
-			continue
+			break
 		}
 	}
 }

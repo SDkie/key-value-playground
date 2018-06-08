@@ -5,6 +5,10 @@ import (
 	"log"
 )
 
+// Currently we are using JSON
+// If we have to use XML or any other format
+// then we have to just make changes in this encoding package
+
 type Input struct {
 	Key string `json:"key"`
 }

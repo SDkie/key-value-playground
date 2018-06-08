@@ -27,6 +27,9 @@ type Config struct {
 
 var config *Config
 
+// Currently Init() reads config values form Environment Variables
+// Latter we can use .ini , .json or any other file type to set the values
+// We have to just make changes in this function
 func Init() *Config {
 	config = new(Config)
 
