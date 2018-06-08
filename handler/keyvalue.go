@@ -23,39 +23,49 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 	}
 	defer c.Close()
 
+	var message, outputBytes []byte
+	var value string
+
 	for {
-		mt, message, err := c.ReadMessage()
 		if err != nil {
-			log.Println("read:", err)
-			break
+			err = c.WriteMessage(websocket.TextMessage, []byte("ERROR:"+err.Error()))
+			if err != nil {
+				log.Println("Error while sending msg,", err)
+				continue
+			}
+		}
+
+		_, message, err = c.ReadMessage()
+		if err != nil {
+			log.Println("Error while reading msg,", err)
+			continue
 		}
 
 		input := encoding.Input{}
 		err = input.ReadFromBytes(message)
 		if err != nil {
-			break
+			continue
 		}
 
-		value, err := model.GetValueFromKey(input.Key)
+		value, err = model.GetValueFromKey(input.Key)
 		if err != nil {
 			log.Println("Error getting value from Key", err)
-			break
+			continue
 		}
 
 		output := encoding.Output{
 			Value: value,
 		}
 
-		outputMarshal, err := output.WriteToBytes()
+		outputBytes, err = output.WriteToBytes()
 		if err != nil {
-			break
+			continue
 		}
 
-		err = c.WriteMessage(mt, outputMarshal)
+		err = c.WriteMessage(websocket.TextMessage, outputBytes)
 		if err != nil {
-			log.Println("write:", err)
-			break
+			log.Println("Error while Writing msg:", err)
+			continue
 		}
-
 	}
 }

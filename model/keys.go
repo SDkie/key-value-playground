@@ -1,9 +1,11 @@
 package model
 
 import (
+	"errors"
 	"log"
 
 	"github.com/SDkie/key-value-playground/db"
+	"github.com/jinzhu/gorm"
 )
 
 type Keys struct {
@@ -15,7 +17,9 @@ type Keys struct {
 func GetValueFromKey(k string) (string, error) {
 	key := Keys{}
 	err := db.GetDb().First(&key, "key = ?", k).Error
-	if err != nil {
+	if err == gorm.ErrRecordNotFound {
+		return "", errors.New("Invalid Key")
+	} else if err != nil {
 		log.Println("Error during sql query", err)
 		return "", err
 	}
