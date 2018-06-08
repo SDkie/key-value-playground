@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/SDkie/key-value-playground/db"
+	"github.com/SDkie/key-value-playground/model"
 	"github.com/gorilla/websocket"
 )
 
@@ -14,12 +14,6 @@ type Input struct {
 }
 
 type Output struct {
-	Value string
-}
-
-type Keys struct {
-	Id    int
-	Key   string
 	Value string
 }
 
@@ -50,19 +44,16 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 			log.Println("Error during Unmarshal", err)
 			break
 		}
-		log.Println("Input:", input.Key)
 
-		key := Keys{}
-		err = db.GetDb().First(&key, "key = ?", input.Key).Error
+		value, err := model.GetValueFromKey(input.Key)
 		if err != nil {
-			log.Println("Error during sql query", err)
+			log.Println("Error getting value from Key", err)
 			break
 		}
 
-		log.Println(key.Id, key.Key, key.Value)
-
-		result := Output{}
-		result.Value = key.Value
+		result := Output{
+			Value: value,
+		}
 
 		outputMarshal, err := json.Marshal(result)
 		if err != nil {
