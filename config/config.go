@@ -1,6 +1,9 @@
 package config
 
-import "os"
+import (
+	"log"
+	"os"
+)
 
 type Database struct {
 	Host     string
@@ -34,6 +37,7 @@ func Init() *Config {
 	// Webserver
 	config.Webserver.Port = os.Getenv("WEBSERVER_PORT")
 
+	log.Println("Config Initialized")
 	return config
 }
 

@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/SDkie/key-value-playground/config"
+	"github.com/SDkie/key-value-playground/db"
 	"github.com/gorilla/websocket"
 )
 
@@ -54,7 +55,7 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 		log.Println("Input:", input.Key)
 
 		key := Keys{}
-		err = db.First(&key, "key = ?", input.Key).Error
+		err = db.GetDb().First(&key, "key = ?", input.Key).Error
 		if err != nil {
 			log.Println("Error during sql query", err)
 			break
@@ -83,7 +84,7 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 func main() {
 	cfg := config.Init()
 
-	err := DbInit()
+	err := db.Init()
 	if err != nil {
 		log.Panic(err)
 	}

@@ -1,4 +1,4 @@
-package main
+package db
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ import (
 
 var db *gorm.DB
 
-func DbInit() error {
+func Init() error {
 	var err error
 	cfg := config.GetConfig()
 	dbCfg := &cfg.Database
@@ -23,7 +23,7 @@ func DbInit() error {
 		return err
 	}
 
-	log.Println("Connected to db")
+	log.Println("Database Initialized")
 	return nil
 }
 
