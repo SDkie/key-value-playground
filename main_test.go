@@ -23,7 +23,6 @@ func TestMain(m *testing.M) {
 		log.Panic(err)
 	}
 
-	// call flag.Parse() here if TestMain uses flags
 	os.Exit(m.Run())
 }
 

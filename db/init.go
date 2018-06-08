@@ -16,7 +16,7 @@ func Init() error {
 	cfg := config.GetConfig()
 	dbCfg := &cfg.Database
 
-	dbSource := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s", dbCfg.Host, dbCfg.Port, dbCfg.User, dbCfg.DbName, dbCfg.Password)
+	dbSource := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s", dbCfg.DB_HOST, dbCfg.DB_PORT, dbCfg.DB_USER, dbCfg.DB_NAME, dbCfg.DB_PASSWORD)
 	db, err = gorm.Open("postgres", dbSource)
 	if err != nil {
 		log.Println("Error connecting to db", err)

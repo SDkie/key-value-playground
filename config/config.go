@@ -1,20 +1,23 @@
 package config
 
 import (
+	"errors"
 	"log"
 	"os"
+
+	"github.com/asaskevich/govalidator"
 )
 
 type Database struct {
-	Host     string
-	Port     string
-	User     string
-	DbName   string
-	Password string
+	DB_HOST     string `valid:"required"`
+	DB_PORT     string `valid:"required"`
+	DB_USER     string `valid:"required"`
+	DB_NAME     string `valid:"required"`
+	DB_PASSWORD string `valid:"required"`
 }
 
 type Webserver struct {
-	Port string
+	WEBSERVER_PORT string `valid:"required"`
 }
 
 type Config struct {
@@ -28,14 +31,20 @@ func Init() *Config {
 	config = new(Config)
 
 	// Database
-	config.Database.Host = os.Getenv("DB_HOST")
-	config.Database.Port = os.Getenv("DB_PORT")
-	config.Database.User = os.Getenv("DB_USER")
-	config.Database.DbName = os.Getenv("DB_NAME")
-	config.Database.Password = os.Getenv("DB_PASSWORD")
+	config.Database.DB_HOST = os.Getenv("DB_HOST")
+	config.Database.DB_PORT = os.Getenv("DB_PORT")
+	config.Database.DB_USER = os.Getenv("DB_USER")
+	config.Database.DB_NAME = os.Getenv("DB_NAME")
+	config.Database.DB_PASSWORD = os.Getenv("DB_PASSWORD")
 
 	// Webserver
-	config.Webserver.Port = os.Getenv("WEBSERVER_PORT")
+	config.Webserver.WEBSERVER_PORT = os.Getenv("WEBSERVER_PORT")
+
+	_, err := govalidator.ValidateStruct(config)
+	if err != nil {
+		err := errors.New("Invalid Environment values, Error:" + err.Error())
+		panic(err)
+	}
 
 	log.Println("Config Initialized")
 	return config
