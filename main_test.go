@@ -23,7 +23,10 @@ func TestMain(m *testing.M) {
 		log.Panic(err)
 	}
 
-	os.Exit(m.Run())
+	testResult := m.Run()
+
+	db.Close()
+	os.Exit(testResult)
 }
 
 func TestKeyValueHandler(t *testing.T) {

@@ -30,3 +30,12 @@ func Init() error {
 func GetDb() *gorm.DB {
 	return db
 }
+
+func Close() error {
+	err := db.Close()
+	if err != nil {
+		log.Println("Error while closing Database", err)
+	}
+
+	return err
+}
