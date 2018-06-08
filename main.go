@@ -18,6 +18,7 @@ func main() {
 		log.Panic(err)
 	}
 
+	http.HandleFunc("/", handler.Hello)
 	http.HandleFunc("/keyvalue", handler.KeyValue)
 
 	addr := fmt.Sprintf("localhost:%s", cfg.Webserver.PORT)
