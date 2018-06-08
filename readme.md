@@ -45,6 +45,42 @@ For the initial release, the following tasks are expected:
 
 * [x] Setup a relation database
 * [x] Create the table `keys` (id, key, value) with the above dictionary
-* [ ] Implement a WebSocket server to handle JSON request/responses
-* [ ] Implement automated tests to check all dictionary key/values
-* [ ] Deploy the server (your choice)
+* [x] Implement a WebSocket server to handle JSON request/responses
+* [x] Implement automated tests to check all dictionary key/values
+* [x] Deploy the server (your choice)
+
+## Commands
+
+* Setup following Env variables
+
+```export DB_HOST=<host>
+export DB_PORT=<port>
+export DB_USER=<user>
+export DB_NAME=<dbName>
+export DB_PASSWORD=<password>
+
+export PORT=<serverPort>
+```
+
+* Build
+
+```
+go build
+```
+
+* Run tests
+```
+go test
+```
+
+* Run Server
+```
+./key-value-playground
+```
+
+## Deployment
+
+I have deployed this application to heroku free dyno. 
+It sleeps after 30 mins of inactivity. 
+So maybe when you hit first time it might take some time to wake from sleep.
+I will share the endpoint in email
