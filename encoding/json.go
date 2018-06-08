@@ -9,7 +9,7 @@ type Input struct {
 	Key string `json:"key"`
 }
 
-func (input *Input) ReadFromByte(msg []byte) error {
+func (input *Input) ReadFromBytes(msg []byte) error {
 	err := json.Unmarshal(msg, input)
 	if err != nil {
 		log.Println("Error during Unmarshal", err)
@@ -18,7 +18,7 @@ func (input *Input) ReadFromByte(msg []byte) error {
 	return nil
 }
 
-func (input *Input) WriteToByte() ([]byte, error) {
+func (input *Input) WriteToBytes() ([]byte, error) {
 	outputMarshal, err := json.Marshal(*input)
 	if err != nil {
 		log.Println("Error during Marshal", err)
@@ -32,7 +32,7 @@ type Output struct {
 	Value string `json:"value"`
 }
 
-func (output *Output) ReadFromByte(msg []byte) error {
+func (output *Output) ReadFromBytes(msg []byte) error {
 	err := json.Unmarshal(msg, output)
 	if err != nil {
 		log.Println("Error during Unmarshal", err)
@@ -41,7 +41,7 @@ func (output *Output) ReadFromByte(msg []byte) error {
 	return nil
 }
 
-func (output *Output) WriteToByte() ([]byte, error) {
+func (output *Output) WriteToBytes() ([]byte, error) {
 	outputMarshal, err := json.Marshal(*output)
 	if err != nil {
 		log.Println("Error during Marshal", err)

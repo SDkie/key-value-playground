@@ -60,7 +60,7 @@ func TestKeyValueHandler(t *testing.T) {
 	for _, c := range cases {
 		var output encoding.Output
 		input := encoding.Input{Key: c.Key}
-		inputMarshal, err := input.WriteToByte()
+		inputMarshal, err := input.WriteToBytes()
 		if err != nil {
 			t.Fatal("Error during Marshal:", err)
 		}
@@ -74,7 +74,7 @@ func TestKeyValueHandler(t *testing.T) {
 			t.Fatal("Error Reading Message:", err)
 		}
 
-		err = output.ReadFromByte(p)
+		err = output.ReadFromBytes(p)
 		if err != nil {
 			t.Fatalf("Error During UnMarshal:", err)
 		}

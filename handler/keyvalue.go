@@ -31,7 +31,7 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 		}
 
 		input := encoding.Input{}
-		err = input.ReadFromByte(message)
+		err = input.ReadFromBytes(message)
 		if err != nil {
 			break
 		}
@@ -46,7 +46,7 @@ func KeyValue(w http.ResponseWriter, r *http.Request) {
 			Value: value,
 		}
 
-		outputMarshal, err := output.WriteToByte()
+		outputMarshal, err := output.WriteToBytes()
 		if err != nil {
 			break
 		}
